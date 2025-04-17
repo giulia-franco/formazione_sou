@@ -1,6 +1,6 @@
 # Ignora i file di sistema Mac
 .DS_Store
-.vagrant/
+ping_pong/.vagrant/
 
 
 
