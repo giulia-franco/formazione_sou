@@ -1,0 +1,44 @@
+Vagrant.configure("2") do |config|
+  
+  # Prima VM
+  config.vm.define "vm1" do |vm1|
+    vm1.vm.box = "Ubuntu/jammy64"
+    vm1.vm.hostname = "vm1"
+
+    # Impostazioni di rete e assegnazione IP
+    vm1.vm.network "private_network", ip: "192.168.33.45"
+
+    # Risorse VM
+    vm1.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 1
+    end
+
+    # Provisioning con uno script
+    vm1.vm.provision "shell", inline: <<-SHELL
+      sudo apt-get update
+      sudo apt-get install -y docker.io 
+    SHELL
+  end
+
+  # Seconda VM
+  config.vm.define "vm2" do |vm2|
+    vm2.vm.box = "Ubuntu/jammy64"
+    vm2.vm.hostname = "vm2"
+
+    # Impostazioni di rete e assegnazione IP
+    vm2.vm.network "private_network", ip: "192.168.33.46"
+
+    # Risorse VM
+    vm2.vm.provider "virtualbox" do |vb|
+      vb.memory = "2048"
+      vb.cpus = 1
+    end
+
+    # Provisioning con uno script
+    vm2.vm.provision "shell", inline: <<-SHELL
+    sudo apt-get update
+    sudo apt-get install -y docker.io 
+  SHELL
+  end
+end
