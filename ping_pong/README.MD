@@ -1,16 +1,44 @@
-PING PONG CON VAGRANT E DOCKER
+# 🏓 ping-pong con Vagrant e Docker
 
-Questo progetto crea due maccine virtuali, (vm1, vm2).
-Su ognuna viene installato Docker, e viene eseguito un container chiamato "my_pingpong", che si alterna ogni 10 secondi tra le due VM, simulando un effetto "ping-pong".
+Questo progetto utilizza **Vagrant** per creare **due VM Ubuntu** con **Docker** installato.  
+Su ciascuna VM viene eseguito un container basato sull’immagine [`ealen/echo-server`](https://hub.docker.com/r/ealen/echo-server), che espone un semplice server web sulla porta `3000`.
 
-Requisiti:
-Virtualbox
-Vagrant
+Ogni **60 secondi**, il container si sposta automaticamente da una VM all’altra, simulando un effetto **ping-pong 🏓** tra i due nodi.
 
-Come funziona:
-Il vagrantfile crea due vm Ubuntu con IP statici.
-Durante il provisioning viene installato Docker su entrambe le vm.
-lo script ping-pong.sh esegue il "vagrant up" per avviare le vm, entra in un ciclo infinito che avvia un container sulla vm1, lo mantiene attivo per 10 secondi, rimuove il container dalla vm1 e fa la stessa cosa con la vm2.
+---
 
+## 🎯 Obiettivo
 
+Configurare **due nodi virtuali** con Vagrant, installare Docker su entrambi e **migrare automaticamente** il container `ealen/echo-server` da una VM all’altra ogni 60 secondi.
 
+---
+
+## 📦 Requisiti
+
+- 🖥️ [VirtualBox](https://www.virtualbox.org/)
+- 📦 [Vagrant](https://www.vagrantup.com/)
+- 🐳 Docker – per eseguire i container 
+
+---
+
+## ⚙️ Come funziona
+
+1. Il `Vagrantfile` crea **due VM Ubuntu** con **IP statici**.
+2. Durante il provisioning viene installato **Docker** su entrambe le macchine.
+3. Lo script `ping-pong.sh`:
+   - Avvia le VM con `vagrant up`
+   - Entra in un **ciclo infinito**:
+     - Avvia il container `my_pingpong` su `vm1`
+     - Attende 10 secondi
+     - Ferma e rimuove il container da `vm1`
+     - Ripete l'operazione su `vm2`
+   - …e così via, simulando un rimbalzo continuo tra le due macchine virtuali. 🏓
+
+---
+
+## 📁 Struttura del progetto
+
+```bash
+├── Vagrantfile
+├── ping-pong.sh
+└── README.md
